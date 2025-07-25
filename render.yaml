@@ -1,0 +1,4 @@
+preBuild:
+  commands:
+    - mkdir -p user_data
+    - echo '${CONFIG_JSON}' > user_data/config.json
