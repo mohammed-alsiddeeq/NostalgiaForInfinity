@@ -77,6 +77,8 @@ def comment_results(options, results_data):
         comment_body += report_table_header_1
         comment_body += report_table_header_2
         for key in sorted(mode_data["timeranges"][timerange]):
+          if key == "profit_sum_pct":
+            continue
           row_line = "| "
           if key == "max_drawdown":
             label = "Max Drawdown"
@@ -89,15 +91,6 @@ def comment_results(options, results_data):
             comment_body += f"{row_line}\n"
           elif key == "profit_mean_pct":
             label = "Profit Mean"
-            row_line += f" {label} |"
-            for report_name in sorted_report_names:
-              value = mode_data["timeranges"][timerange][key][report_name]
-              if not isinstance(value, str):
-                value = f"{round(value, 4)} %"
-              row_line += f" {value} |"
-            comment_body += f"{row_line}\n"
-          elif key == "profit_sum_pct":
-            label = "Profit Sum"
             row_line += f" {label} |"
             for report_name in sorted_report_names:
               value = mode_data["timeranges"][timerange][key][report_name]
@@ -205,6 +198,8 @@ def main():
         for timerange in reports_data[exchange][tradingmode][name]["results"]:
           timeranges.add(timerange)
           for key in reports_data[exchange][tradingmode][name]["results"][timerange]:
+            if key == "profit_sum_pct":
+              continue
             keys.add(key)
             for oname in names:
               if oname == name:
